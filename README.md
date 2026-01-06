@@ -10,29 +10,35 @@ https://huggingface.co/datasets/ASSERT-KTH/RunBugRun-Final
 TODO
 
 ## Repository Structure
-- load_dataset.ipynb – Loads the runbugrun dataset, tokenizes buggy and fixed functions in chunks for later processing.
-- EMBEDDER2.ipynb – Embeds the tokenized buggy–fixed pairs, computes the difference vectors between them, and saves these difference embeddings as files.
-- classifier.ipynb – Uses the difference vectors to perform multi-label classification with hyperparameter search, predicting which bug labels correspond to each buggy function.
+- tokenize_dataset.ipynb – Tokenizes the RunBugRun dataset that can be found on HuggingFace and saves it locally.
+- embedder_buggy_fixed.ipynb - Embeds the tokenized buggy-fixed pairs and stores both embeddings.
+- embedder_diff.ipynb – Embeds the tokenized buggy–fixed pairs, computes the difference vectors between them, and saves these difference embeddings as files.
+- cpp_bug_classifier.ipynb – Uses the difference vectors to perform multi-label classification with hyperparameter search, predicting which bug labels correspond to each buggy function.
+- MLP_projection.ipynb - Trains an MLP to map buggy to fixed vectors in embedding space.
+- ViT_projectin.ipynb - Trains a 1D-ViT to map buggy to fixed vectors in embedding space. Includes data analysis on model perfromance progression, cosine similarity between fixed and predicted vectors, as well as performance for predicting bug labels using predicted-buggy vs fixed-buggy.
 
 ## Workflow
 
-### Tokenization
-
-- Uses load_dataset.ipynb
+### 1. Tokenization
+- Uses `tokenize_dataset.ipynb`.
 - Tokenizes buggy and fixed functions in chunks.
 - Prepares the data for embedding.
 
-### Fixed - Buggy Difference Embedding
+### 2. Embedding and Difference Vectors
+- Uses `embedder_buggy_fixed.ipynb` to create embeddings for each buggy and fixed function.
+- Optionally, `embedder_diff.ipynb` computes difference vectors (`fixed - buggy`) for each pair.
+- Saves embeddings and/or difference vectors as files for later use.
 
-- Uses EMBEDDER2.ipynb
-- Creates embeddings for each buggy and fixed function.
-- Computes the difference vector (fixed - buggy) for each pair.
-- Saves the difference vectors as files for later use.
-
-### Bug Label Classification
-
-- Uses classifier.ipynb
+### 3. Bug Label Classification
+- Uses `cpp_bug_classifier.ipynb`.
 - Loads the saved difference vectors.
-- Runs a hyperparameter search to find the best model setup.
+- Performs hyperparameter search to find the best model configuration.
 - Trains a multi-label classifier to predict bug types (mapped to integers).
 
+### 4. Buggy → Fixed Embedding Mapping
+- Uses `MLP_projection.ipynb` or `ViT_projection.ipynb`.
+- Trains a model to map buggy embeddings to fixed embeddings.
+- `ViT_projection.ipynb` includes:
+  - Performance analysis over training progression
+  - Cosine similarity between predicted and actual fixed embeddings
+  - Evaluation of predicted embeddings for bug label classification
