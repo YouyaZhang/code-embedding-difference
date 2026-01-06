@@ -1,4 +1,4 @@
-This repository contains a pipeline for processing a modified version of the runbugrun dataset uploaded to HuggingFace, embedding buggy vs. fixed code pairs, and training a classifier to predict bug types.
+This repository contains a pipeline for processing a modified version of the RunBugRun dataset on HuggingFace, embedding buggy and fixed code pairs, computing difference embeddings, training models to map buggy to fixed embeddings, and performing multi-label classification to predict bug types.
 
 
 ## Datasets on Huggingface
