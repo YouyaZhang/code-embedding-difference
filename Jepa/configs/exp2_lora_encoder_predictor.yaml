@@ -1,0 +1,21 @@
+# configs/exp2_lora_encoder_predictor.yaml
+
+run:
+  run_name: exp2_lora_vit1d
+
+encoder:
+  train_mode: lora
+  lora:
+    enabled: true
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: ["Wqkv", "Wo"]
+
+predictor:
+  name: vit1d
+
+# train:
+#   epochs: 2
+#   batch_size: 16
+#   lr: 2e-5
